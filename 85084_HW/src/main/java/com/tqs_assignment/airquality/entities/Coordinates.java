@@ -21,6 +21,8 @@ public class Coordinates {
         this.longitude = longitude;
     }
 
+    public Coordinates(){}
+
     public String getPlacename() {
         return placename;
     }

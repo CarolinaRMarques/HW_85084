@@ -29,11 +29,15 @@ public class AirQuality {
     }
 
    public AirQuality(String place,String date, String domminant_pollutant, String aqi, String category) {
+        this.place=place;
         this.date = date;
         this.domminant_pollutant = domminant_pollutant;
         this.aqi = aqi;
         this.category = category;
     }
+
+    public AirQuality(){}
+
 
     public String getDate() {
         return date;
