@@ -1,10 +1,10 @@
-package com.tqs_assignment.airquality.Controllers;
+package com.tqs_assignment.airquality.controllers;
 
 import com.tqs_assignment.airquality.connection.HttpClient;
 import com.tqs_assignment.airquality.services.AirService;
 import com.tqs_assignment.airquality.services.CoordinateService;
-import com.tqs_assignment.airquality.understanding.AirQuality;
-import com.tqs_assignment.airquality.understanding.Coordinates;
+import com.tqs_assignment.airquality.entities.AirQuality;
+import com.tqs_assignment.airquality.entities.Coordinates;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;

@@ -1,4 +1,4 @@
-package com.tqs_assignment.airquality.understanding;
+package com.tqs_assignment.airquality.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
