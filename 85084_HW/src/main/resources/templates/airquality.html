@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Air Quality</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/">Air Quality Homework - 85084</a>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/">Air Quality And Coordinates</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="coord">Coordinates</a>
+            </li>
+        </ul>
+
+    </div>
+</nav>
+
+
+<div class="container">
+    <div class="row">
+        <h3 align="center">Air Quality</h3>
+    </div>
+    <div class="row">
+        <input class="form-control" type="search" placeholder="Ex: Porto,Portugal " aria-label="Search" id="place">
+        <button class="btn btn-secondary btn-block" type="submit" onclick="findCity()" id="searchButton">Search</button>
+    </div>
+
+    <div class="row">
+        <div class="w-100">
+            <ul class="list-group" >
+                <li class="list-group-item" id="dominant"></li>
+                <li class="list-group-item" id="aqi"></li>
+                <li class="list-group-item" id="category"></li>
+            </ul>
+        </div>
+    </div>
+        <div class="alert alert-danger" align="center" role="alert">
+            This page is meant to be used when Coordinates and Air Quality returns Undefined !!
+        </div>
+
+</div>
+
+
+<script type="text/javascript">
+    function fetchAirQuality(placeName) {
+        fetch('http://localhost:8080/airquality/' + placeName)
+            .then((res)=>res.json())
+            .then((data) => {
+                let pollutant = `${data.domminant_pollutant}`
+                let aqi = `${data.aqi}`
+                let category = `${data.category}`
+                document.getElementById("dominant").innerHTML = "Dominant pollutant: " + pollutant;
+                document.getElementById("aqi").innerHTML = "Air Quality: " + aqi;
+                document.getElementById("category").innerHTML = "Description: " + category;
+            })
+            .catch((err) => console.log(err))
+    }
+
+    function findCity() {
+        fetchAirQuality(document.getElementById("place").value);
+    }
+</script>
+
+</body>
+
+</html>

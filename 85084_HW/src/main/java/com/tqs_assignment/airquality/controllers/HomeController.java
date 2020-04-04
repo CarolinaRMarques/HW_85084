@@ -23,6 +23,8 @@ import java.util.HashMap;
 @RestController
 public class HomeController{
     HttpClient cliente = new HttpClient();
+
+
     @Autowired
     private CoordinateService coordinateService;
 
@@ -36,7 +38,7 @@ public class HomeController{
 
     @RequestMapping(value = "/airquality/{placename}")
     public Object getPlaceQuality(@PathVariable String placename) throws IOException, ParseException {
-        Coordinates found = coordinateService.getPlaceByCoordinate(placename);
+        Coordinates found = getCoordWithName(placename);
         AirQuality currAir;
         // currAir.setPlace(placename);
 
@@ -64,14 +66,19 @@ public class HomeController{
             airService.saveAirData(currAir);
             object = airService.getDataByPlaceName(placename);
             Cache.GlobalCache.put(linkAPI, object);
-
         }
         return object;
     }
 
+     @RequestMapping(value = "/coords/{placename}")
+     public Coordinates displayCoords(@PathVariable String placename) throws IOException, ParseException {
+        return getCoordWithName(placename);
+     }
 
-    @RequestMapping(value = "coord/{placename}")
-    public Coordinates getCoordWithName(@PathVariable String placename) throws IOException, ParseException {
+
+
+   // @RequestMapping(value = "coord/{placename}")
+    public Coordinates getCoordWithName (String placename) throws IOException, ParseException {
         Coordinates found;
         Double latitude = null;
         Double longitude = null;
