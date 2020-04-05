@@ -41,7 +41,6 @@ public class HomeController{
     public Object getPlaceQuality(@PathVariable String placename) throws IOException, ParseException {
         Coordinates found = getCoordWithName(placename);
         AirQuality currAir;
-        // currAir.setPlace(placename);
 
         String apiurl = "https://api.breezometer.com/air-quality/v2/current-conditions";
         String apiKey = "ae34208e72cb4acbb2e7a611e4d925e9";
