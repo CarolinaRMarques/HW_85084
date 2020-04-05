@@ -17,4 +17,7 @@ public class HtmlController {
 
     @RequestMapping(value = "/air")
     public static String air() {return "airquality"; }
+
+    @RequestMapping(value = "/hourly")
+    public static String hours() {return "hourly";}
 }

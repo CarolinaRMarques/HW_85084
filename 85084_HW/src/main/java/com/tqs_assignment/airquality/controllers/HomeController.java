@@ -78,6 +78,7 @@ public class HomeController{
         String apiKey = "ae34208e72cb4acbb2e7a611e4d925e9";
         String linkAPI = apiurl + "?lat=" + found.getLatitude() + "&lon=" + found.getLongitude() + "&key=" + apiKey + "&hours=" +hours;
 
+        System.out.println(linkAPI);
         Object object = Cache.GlobalCache.get(linkAPI);
         if (object == null) {
             URL url = new URL(linkAPI);
