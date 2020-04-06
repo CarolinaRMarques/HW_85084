@@ -87,8 +87,8 @@
             .then((data) => {
                 let lat = `${data.latitude}`
                 let lon = `${data.longitude}`
-                document.getElementById('latitude').innerHTML = lat;
-                document.getElementById('longitude').innerHTML = lon;
+                document.getElementById('latitude').innerHTML = "Latitude: " + lat;
+                document.getElementById('longitude').innerHTML = "Longitude: " + lon;
             }).catch((err) => console.log(err))
     }
 

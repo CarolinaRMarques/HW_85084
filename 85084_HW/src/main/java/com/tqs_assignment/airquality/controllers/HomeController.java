@@ -135,8 +135,7 @@ public class HomeController {
     public Coordinates displayCoords(@PathVariable (required = false) Optional<String> placename) throws IOException, ParseException {
         Coordinates object;
         if (placename.isPresent()) {
-            coordinateService.saveCoordinate(getCoordWithName(placename.get()));
-            object = coordinateService.getPlaceByCoordinate(placename.get());
+              return getCoordWithName(placename.get());
         }
         else {
             object = new Coordinates("undefined",0.0,0.0);
@@ -153,7 +152,6 @@ public class HomeController {
         URL url = new URL("https://api.opencagedata.com/geocode/v1/json?q=" + placename + "&key=" + apiKey + "&language=en&pretty=1");
         String inline = cliente.get(url);
 
-        System.out.println(url.toString());
         JSONParser parse = new JSONParser();
         JSONObject jsonObject = (JSONObject) parse.parse(inline);
         JSONArray jsonArrayResults = (JSONArray) jsonObject.get("results");
@@ -171,7 +169,6 @@ public class HomeController {
             }
         }
         found = new Coordinates(placename, latitude, longitude);
-
         return found;
     }
 }
