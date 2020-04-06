@@ -82,7 +82,7 @@ public class HomeController {
         return object;
     }
 
-    @RequestMapping(value = {"/airhistory/{placename}/{hours}", "/airhistory"})
+    @RequestMapping(value = {"/airhistory/{placename}/{hours}","/airhistory/{placename}", "/airhistory/{hours}", "/airhistory"})
     public Object getPlaceHistory(@PathVariable  (required = false) Optional<String> hours, @PathVariable  (required = false) Optional<String> placename) throws IOException, ParseException {
         Object object;
         if (!placename.isPresent() || !hours.isPresent()){
@@ -92,33 +92,38 @@ public class HomeController {
             Coordinates found = getCoordWithName(placename.get());
             ArrayList<AirQuality> currAir = new ArrayList<>();
 
-            if (found.getPlacename().equals("Non Existing") || Integer.parseInt(hours.get()) < 0 || !hours.get().chars().allMatch(Character::isDigit)) {
+            if (found.getPlacename().equals("Non Existing") || !hours.get().matches("[0-9]+")) {
                 object = Collections.emptyList();
             } else {
-                String apiurl = "https://api.breezometer.com/air-quality/v2/historical/hourly";
-                String apiKey = "ae34208e72cb4acbb2e7a611e4d925e9";
-                String linkAPI = apiurl + "?lat=" + found.getLatitude() + "&lon=" + found.getLongitude() + "&key=" + apiKey + "&hours=" + hours.get();
+                if (Integer.parseInt(hours.get()) <= 0 ){
+                    object = Collections.emptyList();
+                }
+                else {
+                    String apiurl = "https://api.breezometer.com/air-quality/v2/historical/hourly";
+                    String apiKey = "ae34208e72cb4acbb2e7a611e4d925e9";
+                    String linkAPI = apiurl + "?lat=" + found.getLatitude() + "&lon=" + found.getLongitude() + "&key=" + apiKey + "&hours=" + hours.get();
 
-                object = Cache.GlobalCache.get(linkAPI);
-                if (object == null) {
-                    URL url = new URL(linkAPI);
-                    String inline = cliente.get(url);
+                    object = Cache.GlobalCache.get(linkAPI);
+                    if (object == null) {
+                        URL url = new URL(linkAPI);
+                        String inline = cliente.get(url);
 
-                    JSONParser parse = new JSONParser();
-                    JSONObject jsonObject = (JSONObject) parse.parse(inline);
-                    JSONArray jsonObject1 = (JSONArray) jsonObject.get("data");
-                    for (int i = 0; i < jsonObject1.size(); i++) {
-                        JSONObject hey = (JSONObject) jsonObject1.get(i);
-                        JSONObject indexes = (JSONObject) hey.get("indexes");
-                        JSONObject baqi = (JSONObject) indexes.get("baqi");
-                        String category = (String) baqi.get("category");
-                        String aqi = (String) baqi.get("aqi_display");
-                        String pollutant = (String) baqi.get("dominant_pollutant");
-                        currAir.add(i, new AirQuality(placename.get() + Integer.toString(i), pollutant, aqi, category));
+                        JSONParser parse = new JSONParser();
+                        JSONObject jsonObject = (JSONObject) parse.parse(inline);
+                        JSONArray jsonObject1 = (JSONArray) jsonObject.get("data");
+                        for (int i = 0; i < jsonObject1.size(); i++) {
+                            JSONObject hey = (JSONObject) jsonObject1.get(i);
+                            JSONObject indexes = (JSONObject) hey.get("indexes");
+                            JSONObject baqi = (JSONObject) indexes.get("baqi");
+                            String category = (String) baqi.get("category");
+                            String aqi = (String) baqi.get("aqi_display");
+                            String pollutant = (String) baqi.get("dominant_pollutant");
+                            currAir.add(i, new AirQuality(placename.get() + Integer.toString(i), pollutant, aqi, category));
+                        }
+                        airService.saveHistData(currAir);
+                        object = airService.findData();
+                        Cache.GlobalCache.put(linkAPI, object);
                     }
-                    airService.saveHistData(currAir);
-                    object = airService.findData();
-                    Cache.GlobalCache.put(linkAPI, object);
                 }
             }
         }
@@ -165,7 +170,7 @@ public class HomeController {
             }
         }
         found = new Coordinates(placename, latitude, longitude);
-        coordinateService.saveCoordinate(found);
-        return coordinateService.getPlaceByCoordinate(placename);
+
+        return found;
     }
 }
