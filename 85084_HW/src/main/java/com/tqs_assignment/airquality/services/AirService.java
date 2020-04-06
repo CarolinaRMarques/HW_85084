@@ -30,8 +30,6 @@ public class AirService {
         }
     }
 
-    public List<AirQuality> findData() {
-        return airRepository.findAll();
-    }
+    public  List<AirQuality> findData() {return airRepository.findAll(); }
 
 }

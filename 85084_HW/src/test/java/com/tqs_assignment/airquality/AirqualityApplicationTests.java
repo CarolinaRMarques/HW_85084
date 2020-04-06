@@ -11,8 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -43,18 +48,35 @@ class AirqualityApplicationTests {
     }
 
     @Test
-    void getAirQuality_returnAirQualityDetailsTest() {
+    void getAirQuality_returnStatus200() {
         ResponseEntity<AirQuality> entity = restClient.getForEntity("/airquality/Aveiro,Portugal", AirQuality.class);
         assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(entity.getBody().getPlace()).isEqualTo("Aveiro,Portugal");
     }
 
+    @Test
+    public void givenHourlyAirQuality_whenGetAll_thenStatus200() throws Exception {
+        createTestAirQuality("Arrifana,Portugal0");
+        createTestAirQuality("Arrifana,Portugal1");
+
+        ResponseEntity<List<AirQuality>> response = restClient
+                .exchange("/airhistory/Arrifana,Portugal/2", HttpMethod.GET, null, new ParameterizedTypeReference<List<AirQuality>>() {
+                });
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody()).extracting(AirQuality::getPlace).contains("Arrifana,Portugal0", "Arrifana,Portugal1");
+
+    }
 
     @Test
-    void getCoordinates_returnCoordinatesDetailsTest() {
+    void getCoordinates_returnStatus200() {
         ResponseEntity<Coordinates> entity = restClient.getForEntity("/coords/Porto,Portugal", Coordinates.class);
         assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(entity.getBody().getPlacename()).isEqualTo("Porto,Portugal");
     }
 
+    private void createTestAirQuality(String placename) {
+        AirQuality a =   new AirQuality(placename, "o3", "75", "Good air quality") ;
+        airRepository.saveAndFlush(a);
+    }
 }

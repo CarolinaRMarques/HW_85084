@@ -20,7 +20,7 @@ class CoordinateServiceTest {
     private CoordinateService coordService;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         Coordinates a = new Coordinates("Aveiro,Portugal", 30.0215, 40.2520);
 
         Mockito.when(coordRepository.findByPlacename(a.getPlacename())).thenReturn(a);

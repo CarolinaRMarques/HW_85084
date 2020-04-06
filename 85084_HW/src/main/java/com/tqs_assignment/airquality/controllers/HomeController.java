@@ -135,7 +135,8 @@ public class HomeController {
     public Coordinates displayCoords(@PathVariable (required = false) Optional<String> placename) throws IOException, ParseException {
         Coordinates object;
         if (placename.isPresent()) {
-            object = getCoordWithName(placename.get());
+            coordinateService.saveCoordinate(getCoordWithName(placename.get()));
+            object = coordinateService.getPlaceByCoordinate(placename.get());
         }
         else {
             object = new Coordinates("undefined",0.0,0.0);

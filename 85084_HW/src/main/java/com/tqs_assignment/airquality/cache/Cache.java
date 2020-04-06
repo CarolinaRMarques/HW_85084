@@ -5,8 +5,8 @@ import java.util.Timer;
 
 public class Cache extends HashMap<String, Object> {
     public static HashMap<String, Object> GlobalCache = new Cache();
-    int success;
-    int insucess;
+    private int success;
+    private int insucess;
     private Timer timer = new Timer();
 
     @Override
