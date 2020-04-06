@@ -5,6 +5,7 @@ import java.util.Timer;
 
 public class Cache extends HashMap<String, Object> {
     public static HashMap<String, Object> GlobalCache = new Cache();
+
     private int success;
     private int insucess;
     private Timer timer = new Timer();
@@ -17,7 +18,6 @@ public class Cache extends HashMap<String, Object> {
         } else {
             success++;
         }
-        //    System.out.println("s"+success+" in"+insucess);
         return value;
     }
 
@@ -34,6 +34,22 @@ public class Cache extends HashMap<String, Object> {
                 10000
         );
         return value;
+    }
+
+    public int getSuccess() {
+        return success;
+    }
+
+    public void setSuccess(int success) {
+        this.success = success;
+    }
+
+    public int getInsucess() {
+        return insucess;
+    }
+
+    public void setInsucess(int insucess) {
+        this.insucess = insucess;
     }
 
 
