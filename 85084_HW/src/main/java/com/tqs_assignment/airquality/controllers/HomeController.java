@@ -25,7 +25,7 @@ import java.util.Optional;
 
 @RestController
 public class HomeController {
-    HttpClient cliente = new HttpClient();
+    private HttpClient cliente = new HttpClient();
 
 
     @Autowired
@@ -39,45 +39,50 @@ public class HomeController {
         this.airService = airService;
     }
 
-    @RequestMapping(value = "/airquality/{placename}")
-    public Object getPlaceQuality(@PathVariable String placename) throws IOException, ParseException {
-        Coordinates found = getCoordWithName(placename);
-        AirQuality currAir;
+    @RequestMapping(value = { "/airquality/{placename}", "/airquality"})
+    public Object getPlaceQuality(@PathVariable Optional<String> placename) throws IOException, ParseException {
+        AirQuality error = new AirQuality("undefined", "undefined", "undefined", "undefined");;
         Object object;
+        if (placename.isPresent()) {
+            Coordinates found = getCoordWithName(placename.get());
+            AirQuality currAir;
 
-        if (found.getPlacename() == "Non Existing") {
-            object = new AirQuality("undefined","undefined","undefined","undefined");
-        }
-        else{
-            String apiurl = "https://api.breezometer.com/air-quality/v2/current-conditions";
-            String apiKey = "ae34208e72cb4acbb2e7a611e4d925e9";
-            String linkAPI = apiurl + "?lat=" + found.getLatitude() + "&lon=" + found.getLongitude() + "&key=" + apiKey;
+            if (found.getPlacename().equals("Non Existing")) {
+                object = error;
+            } else {
+                String apiurl = "https://api.breezometer.com/air-quality/v2/current-conditions";
+                String apiKey = "ae34208e72cb4acbb2e7a611e4d925e9";
+                String linkAPI = apiurl + "?lat=" + found.getLatitude() + "&lon=" + found.getLongitude() + "&key=" + apiKey;
 
-            object = Cache.GlobalCache.get(linkAPI);
-            if (object == null) {
-                URL url = new URL(linkAPI);
-                String inline = cliente.get(url);
+                object = Cache.GlobalCache.get(linkAPI);
+                if (object == null) {
+                    URL url = new URL(linkAPI);
+                    String inline = cliente.get(url);
 
 
-                JSONParser parse = new JSONParser();
-                JSONObject jsonObject = (JSONObject) parse.parse(inline);
-                JSONObject jsonObject1 = (JSONObject) jsonObject.get("data");
-                JSONObject indexes = (JSONObject) jsonObject1.get("indexes");
-                JSONObject baqi = (JSONObject) indexes.get("baqi");
-                String category = (String) baqi.get("category");
-                String aqi = (String) baqi.get("aqi_display");
-                String pollutant = (String) baqi.get("dominant_pollutant");
+                    JSONParser parse = new JSONParser();
+                    JSONObject jsonObject = (JSONObject) parse.parse(inline);
+                    JSONObject jsonObject1 = (JSONObject) jsonObject.get("data");
+                    JSONObject indexes = (JSONObject) jsonObject1.get("indexes");
+                    JSONObject baqi = (JSONObject) indexes.get("baqi");
+                    String category = (String) baqi.get("category");
+                    String aqi = (String) baqi.get("aqi_display");
+                    String pollutant = (String) baqi.get("dominant_pollutant");
 
-                currAir = new AirQuality(placename, pollutant, aqi, category);
-                airService.saveAirData(currAir);
-                object = airService.getDataByPlaceName(placename);
-                Cache.GlobalCache.put(linkAPI, object);
+                    currAir = new AirQuality(placename.get(), pollutant, aqi, category);
+                    airService.saveAirData(currAir);
+                    object = airService.getDataByPlaceName(placename.get());
+                    Cache.GlobalCache.put(linkAPI, object);
+                }
             }
+        }
+        else {
+           object = error;
         }
         return object;
     }
 
-    @RequestMapping(value = {"/airhistory/{placename}/{hours}", "/airhistory/{placename}", "/airhistory/{hours}", "/airhistory"})
+    @RequestMapping(value = {"/airhistory/{placename}/{hours}", "/airhistory"})
     public Object getPlaceHistory(@PathVariable  (required = false) Optional<String> hours, @PathVariable  (required = false) Optional<String> placename) throws IOException, ParseException {
         Object object;
         if (!placename.isPresent() || !hours.isPresent()){
@@ -87,12 +92,12 @@ public class HomeController {
             Coordinates found = getCoordWithName(placename.get());
             ArrayList<AirQuality> currAir = new ArrayList<>();
 
-            if (found.getPlacename() == "Non Existing" || Integer.parseInt(hours.get()) > 0  || hours.get().chars().allMatch(Character::isDigit) == false) {
+            if (found.getPlacename().equals("Non Existing") || Integer.parseInt(hours.get()) < 0 || !hours.get().chars().allMatch(Character::isDigit)) {
                 object = Collections.emptyList();
             } else {
                 String apiurl = "https://api.breezometer.com/air-quality/v2/historical/hourly";
                 String apiKey = "ae34208e72cb4acbb2e7a611e4d925e9";
-                String linkAPI = apiurl + "?lat=" + found.getLatitude() + "&lon=" + found.getLongitude() + "&key=" + apiKey + "&hours=" + hours;
+                String linkAPI = apiurl + "?lat=" + found.getLatitude() + "&lon=" + found.getLongitude() + "&key=" + apiKey + "&hours=" + hours.get();
 
                 object = Cache.GlobalCache.get(linkAPI);
                 if (object == null) {
@@ -109,7 +114,7 @@ public class HomeController {
                         String category = (String) baqi.get("category");
                         String aqi = (String) baqi.get("aqi_display");
                         String pollutant = (String) baqi.get("dominant_pollutant");
-                        currAir.add(i, new AirQuality(placename + Integer.toString(i), pollutant, aqi, category));
+                        currAir.add(i, new AirQuality(placename.get() + Integer.toString(i), pollutant, aqi, category));
                     }
                     airService.saveHistData(currAir);
                     object = airService.findData();
@@ -121,9 +126,16 @@ public class HomeController {
     }
 
 
-    @RequestMapping(value = "/coords/{placename}")
-    public Coordinates displayCoords(@PathVariable String placename) throws IOException, ParseException {
-       return getCoordWithName(placename);
+    @RequestMapping(value = {"/coords/{placename}", "/coords"})
+    public Coordinates displayCoords(@PathVariable (required = false) Optional<String> placename) throws IOException, ParseException {
+        Coordinates object;
+        if (placename.isPresent()) {
+            object = getCoordWithName(placename.get());
+        }
+        else {
+            object = new Coordinates("undefined",0.0,0.0);
+        }
+        return object;
     }
 
 

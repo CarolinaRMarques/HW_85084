@@ -20,8 +20,6 @@ public class HttpClient {
             while (sc.hasNext()) {
                 inline += sc.nextLine();
             }
-            //System.out.println("JSON data in string format");
-            // System.out.println(inline);
             sc.close();
         }
         return inline;
