@@ -95,7 +95,7 @@ class HomeControllerTest {
     @Test
     public void whenGetInexistingPlaceCoords_theReturnUndefinedCoordinates() throws Exception {
         String not_valid_city = "not_valid_city";
-        given(coordService.getPlaceByCoordinate((not_valid_city))).willReturn(new Coordinates("Non Exisiting",0.0,0.0));
+        given(coordService.getPlaceByCoordinate((not_valid_city))).willReturn(new Coordinates("Non Existing",0.0,0.0));
         servlet.perform(MockMvcRequestBuilders.get("/coords/".concat(not_valid_city)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("placename").value("Non Existing"));

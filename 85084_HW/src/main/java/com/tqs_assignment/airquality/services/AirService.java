@@ -25,11 +25,13 @@ public class AirService {
     }
 
     public void saveHistData(ArrayList<AirQuality> air) {
+        airRepository.deleteAll();
         for (int i = 0; i < air.size(); i++) {
             airRepository.save(air.get(i));
         }
     }
 
-    public  List<AirQuality> findData() {return airRepository.findAll(); }
+    public  List<AirQuality> findData() {
+        return airRepository.findAll(); }
 
 }
