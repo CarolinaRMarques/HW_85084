@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CoordinateRepository extends JpaRepository<Coordinates, String> {
-    Coordinates findByPlacename (String place);
+    Coordinates findByPlacename(String place);
 }

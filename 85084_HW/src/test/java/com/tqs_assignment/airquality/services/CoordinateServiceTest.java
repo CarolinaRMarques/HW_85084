@@ -9,11 +9,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Arrays;
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 class CoordinateServiceTest {
@@ -25,7 +21,7 @@ class CoordinateServiceTest {
 
     @BeforeEach
     public void setUp() throws Exception {
-        Coordinates a = new Coordinates("Aveiro,Portugal", 30.0215,40.2520);
+        Coordinates a = new Coordinates("Aveiro,Portugal", 30.0215, 40.2520);
 
         Mockito.when(coordRepository.findByPlacename(a.getPlacename())).thenReturn(a);
         Mockito.when(coordRepository.findByPlacename("wrong_name")).thenReturn(null);
@@ -33,8 +29,8 @@ class CoordinateServiceTest {
 
     @Test
     void whenValidPlace_getPlaceByCoordinate() {
-        String name =  "Aveiro,Portugal";
-         Coordinates found = coordRepository.findByPlacename(name);
+        String name = "Aveiro,Portugal";
+        Coordinates found = coordRepository.findByPlacename(name);
         assertThat(found.getPlacename()).isEqualTo(name);
     }
 
@@ -48,7 +44,7 @@ class CoordinateServiceTest {
 
     @Test
     public void whenInvalidPlaceName_thenReturnNull() {
-       Coordinates fromDb = coordRepository.findByPlacename("doesNotExist");
+        Coordinates fromDb = coordRepository.findByPlacename("doesNotExist");
         assertThat(fromDb).isNull();
     }
 

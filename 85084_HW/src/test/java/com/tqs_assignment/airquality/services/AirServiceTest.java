@@ -14,7 +14,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 class AirServiceTest {
@@ -28,7 +27,7 @@ class AirServiceTest {
         AirQuality a = new AirQuality("Aveiro,Portugal", "o3", "77", "Good Air Quality");
         AirQuality b = new AirQuality("Porto,Portugal", "o3", "77", "Good Air Quality");
 
-        List<AirQuality> allAirQuality = Arrays.asList(a,b);
+        List<AirQuality> allAirQuality = Arrays.asList(a, b);
         Mockito.when(airRepository.findAll()).thenReturn(allAirQuality);
         Mockito.when(airRepository.findByPlace(a.getPlace())).thenReturn(a);
         Mockito.when(airRepository.findByPlace("wrong_name")).thenReturn(null);
@@ -36,7 +35,7 @@ class AirServiceTest {
 
     @Test
     void whenValidPlace_findByPlace() {
-        String name =  "Aveiro,Portugal";
+        String name = "Aveiro,Portugal";
         AirQuality found = airRepository.findByPlace(name);
         assertThat(found.getPlace()).isEqualTo(name);
     }
@@ -59,7 +58,7 @@ class AirServiceTest {
         AirQuality b = new AirQuality("Porto,Portugal", "o3", "77", "Good Air Quality");
         List<AirQuality> allAirQuality = airService.findData();
         verifyFindAllAirQualityIsCalledOnce();
-        assertThat(allAirQuality).hasSize(2).extracting(AirQuality::getPlace).contains(a.getPlace(),b.getPlace());
+        assertThat(allAirQuality).hasSize(2).extracting(AirQuality::getPlace).contains(a.getPlace(), b.getPlace());
     }
 
 

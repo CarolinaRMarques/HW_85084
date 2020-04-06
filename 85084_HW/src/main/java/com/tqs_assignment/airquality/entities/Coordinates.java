@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="coordinates")
+@Table(name = "coordinates")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Coordinates {
     @Id
@@ -21,7 +21,8 @@ public class Coordinates {
         this.longitude = longitude;
     }
 
-    public Coordinates(){}
+    public Coordinates() {
+    }
 
     public String getPlacename() {
         return placename;

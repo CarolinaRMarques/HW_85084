@@ -9,13 +9,15 @@ public class CoordinateService {
     @Autowired
     CoordinateRepository coordinateRepository;
 
-    public CoordinateService(CoordinateRepository coordinateRepository){this.coordinateRepository = coordinateRepository; }
+    public CoordinateService(CoordinateRepository coordinateRepository) {
+        this.coordinateRepository = coordinateRepository;
+    }
 
-    public Coordinates getPlaceByCoordinate(String placename){
+    public Coordinates getPlaceByCoordinate(String placename) {
         return coordinateRepository.findByPlacename(placename);
     }
 
-    public void saveCoordinate (Coordinates coordinate){
+    public void saveCoordinate(Coordinates coordinate) {
         coordinateRepository.save(coordinate);
     }
 }

@@ -3,8 +3,8 @@
 <head>
     <meta charset="ISO-8859-1">
     <title>Air Quality</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -31,16 +31,16 @@
         <h3 align="center">Hourly Air Quality</h3>
     </div>
     <div class="row">
-        <input class="form-control" type="search" placeholder="Ex: Porto,Portugal " aria-label="Search" id="place">
-        <input class="form-control" type="search" placeholder="Ex: 3 " aria-label="Search" id="hours">
-        <button class="btn btn-secondary btn-block" type="submit" onclick="findHourly()" id="searchButton">Search
+        <input aria-label="Search" class="form-control" id="place" placeholder="Ex: Porto,Portugal " type="search">
+        <input aria-label="Search" class="form-control" id="hours" placeholder="Ex: 3 " type="search">
+        <button class="btn btn-secondary btn-block" id="searchButton" onclick="findHourly()" type="submit">Search
         </button>
     </div>
 
     <div class="row">
         <div class="w-100">
             <br>
-             <div id="output"></div>
+            <div id="output"></div>
         </div>
     </div>
 
@@ -50,25 +50,28 @@
 
 <script type="text/javascript">
     function findHourly() {
-        getCoord(document.getElementById("place").value,document.getElementById("hours").value);
+        getCoord(document.getElementById("place").value, document.getElementById("hours").value);
     }
 
-    function getCoord(placeName,hours) {
-        fetch('http://localhost:8080/airhistory/' + placeName+ "/" + hours )
+    function getCoord(placeName, hours) {
+        fetch('http://localhost:8080/airhistory/' + placeName + "/" + hours)
             .then((res) => res.json())
             .then((data) => {
                 let output = '<h2 align="center">Hours</h2>';
-                data.forEach(function(hour) {
-                    output += `
+                if (hours == "") { output += "";}
+                else {
+                    data.forEach(function (hour) {
+                        output += `
                         <ul class="list-group">
                           <li class="list-group-item">Pollutant: ${hour.domminant_pollutant} </li>
                           <li class="list-group-item">AirQuality: ${hour.aqi}</li>
                           <li class="list-group-item">Description: ${hour.category}</li>
                         </ul>
                          `;
-                })
-                    document.getElementById('output').innerHTML = output;
-                }).catch((err) => console.log(err))
+                    })
+                }
+                document.getElementById('output').innerHTML = output;
+            }).catch((err) => console.log(err))
     }
 </script>
 

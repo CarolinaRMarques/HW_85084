@@ -7,7 +7,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 class CoordinateRepositoryTest {
@@ -20,7 +19,7 @@ class CoordinateRepositoryTest {
 
     @Test
     public void whenFindByName_thenReturnCoordinates() {
-        Coordinates a = new Coordinates("Aveiro,Portugal", 30.0215,40.2520);
+        Coordinates a = new Coordinates("Aveiro,Portugal", 30.0215, 40.2520);
         entityManager.persistAndFlush(a);
 
         Coordinates found = repo.findByPlacename(a.getPlacename());

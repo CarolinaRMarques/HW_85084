@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="airQuality")
+@Table(name = "airQuality")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AirQuality {
     @Id
@@ -15,6 +15,16 @@ public class AirQuality {
     private String domminant_pollutant;
     private String aqi;
     private String category;
+
+    public AirQuality(String place, String domminant_pollutant, String aqi, String category) {
+        this.place = place;
+        this.domminant_pollutant = domminant_pollutant;
+        this.aqi = aqi;
+        this.category = category;
+    }
+
+    public AirQuality() {
+    }
 
     @Override
     public String toString() {
@@ -25,18 +35,6 @@ public class AirQuality {
                 ", category='" + category + '\'' +
                 '}';
     }
-
-   public AirQuality(String place, String domminant_pollutant, String aqi, String category) {
-        this.place=place;
-        this.domminant_pollutant = domminant_pollutant;
-        this.aqi = aqi;
-        this.category = category;
-    }
-
-    public AirQuality(){}
-
-
-
 
     public String getDomminant_pollutant() {
         return domminant_pollutant;
@@ -61,6 +59,7 @@ public class AirQuality {
     public void setCategory(String category) {
         this.category = category;
     }
+
     public String getPlace() {
         return place;
     }
@@ -68,7 +67,6 @@ public class AirQuality {
     public void setPlace(String place) {
         this.place = place;
     }
-
 
 
 }

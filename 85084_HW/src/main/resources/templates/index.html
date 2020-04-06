@@ -3,7 +3,8 @@
 <head>
     <meta charset="ISO-8859-1">
     <title>Air Quality</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -30,17 +31,17 @@
         <h3 align="center">Air Quality</h3>
     </div>
     <div class="row">
-        <input class="form-control" type="search" placeholder="Ex: Porto,Portugal " aria-label="Search" id="place">
-         <button class="btn btn-secondary btn-block" type="submit" onclick="findCity()" id="searchButton">Search</button>
+        <input aria-label="Search" class="form-control" id="place" placeholder="Ex: Porto,Portugal " type="search">
+        <button class="btn btn-secondary btn-block" id="searchButton" onclick="findCity()" type="submit">Search</button>
     </div>
 
     <div class="row">
         <div class="w-100">
-                <ul class="list-group" >
-                    <li class="list-group-item" id="dominant"></li>
-                    <li class="list-group-item" id="aqi"></li>
-                    <li class="list-group-item" id="category"></li>
-                </ul>
+            <ul class="list-group">
+                <li class="list-group-item" id="dominant"></li>
+                <li class="list-group-item" id="aqi"></li>
+                <li class="list-group-item" id="category"></li>
+            </ul>
         </div>
     </div>
 
@@ -62,26 +63,26 @@
 <script type="text/javascript">
     function fetchAirQuality(placeName) {
         fetch('http://localhost:8080/airquality/' + placeName)
-            .then((res)=>res.json())
+            .then((res) => res.json())
             .then((data) => {
-                 let pollutant = `${data.domminant_pollutant}`
-                 let aqi = `${data.aqi}`
-                 let category = `${data.category}`
-                 document.getElementById("dominant").innerHTML = "Dominant pollutant: " + pollutant;
-                 document.getElementById("aqi").innerHTML = "Air Quality: " + aqi;
-                 document.getElementById("category").innerHTML = "Description: " + category;
-             })
+                let pollutant = `${data.domminant_pollutant}`
+                let aqi = `${data.aqi}`
+                let category = `${data.category}`
+                document.getElementById("dominant").innerHTML = "Dominant pollutant: " + pollutant;
+                document.getElementById("aqi").innerHTML = "Air Quality: " + aqi;
+                document.getElementById("category").innerHTML = "Description: " + category;
+            })
             .catch((err) => console.log(err))
     }
 
     function findCity() {
-      fetchAirQuality(document.getElementById("place").value);
-      wait(5000);
-      getCoord(document.getElementById("place").value);
+        fetchAirQuality(document.getElementById("place").value);
+        wait(5000);
+        getCoord(document.getElementById("place").value);
     }
 
     function getCoord(placeName) {
-        fetch('http://localhost:8080/coords/'+placeName)
+        fetch('http://localhost:8080/coords/' + placeName)
             .then((res) => res.json())
             .then((data) => {
                 let lat = `${data.latitude}`
@@ -91,12 +92,13 @@
             }).catch((err) => console.log(err))
     }
 
-    function wait(ms)
-    {
+    function wait(ms) {
         var d = new Date();
         var d2 = null;
-        do { d2 = new Date(); }
-        while(d2-d < ms);
+        do {
+            d2 = new Date();
+        }
+        while (d2 - d < ms);
     }
 </script>
 

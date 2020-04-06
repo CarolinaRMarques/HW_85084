@@ -3,7 +3,8 @@
 <head>
     <meta charset="ISO-8859-1">
     <title>Air Quality</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -30,30 +31,26 @@
         <h3 align="center">Air Quality</h3>
     </div>
     <div class="row">
-        <input class="form-control" type="search" placeholder="Ex: Porto,Portugal " aria-label="Search" id="place">
-        <button class="btn btn-secondary btn-block" type="submit" onclick="findCity()" id="searchButton">Search</button>
+        <input aria-label="Search" class="form-control" id="place" placeholder="Ex: Porto,Portugal " type="search">
+        <button class="btn btn-secondary btn-block" id="searchButton" onclick="findCity()" type="submit">Search</button>
     </div>
 
     <div class="row">
         <div class="w-100">
-            <ul class="list-group" >
+            <ul class="list-group">
                 <li class="list-group-item" id="dominant"></li>
                 <li class="list-group-item" id="aqi"></li>
                 <li class="list-group-item" id="category"></li>
             </ul>
         </div>
     </div>
-        <div class="alert alert-danger" align="center" role="alert">
-            This page is meant to be used when Coordinates and Air Quality returns Undefined !!
-        </div>
-
 </div>
 
 
 <script type="text/javascript">
     function fetchAirQuality(placeName) {
         fetch('http://localhost:8080/airquality/' + placeName)
-            .then((res)=>res.json())
+            .then((res) => res.json())
             .then((data) => {
                 let pollutant = `${data.domminant_pollutant}`
                 let aqi = `${data.aqi}`

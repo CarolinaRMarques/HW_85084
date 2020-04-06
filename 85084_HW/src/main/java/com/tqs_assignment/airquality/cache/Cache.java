@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.Timer;
 
 public class Cache extends HashMap<String, Object> {
+    public static HashMap<String, Object> GlobalCache = new Cache();
     int success;
     int insucess;
-    public static HashMap<String, Object> GlobalCache = new Cache();
     private Timer timer = new Timer();
 
     @Override
@@ -17,7 +17,7 @@ public class Cache extends HashMap<String, Object> {
         } else {
             success++;
         }
-    //    System.out.println("s"+success+" in"+insucess);
+        //    System.out.println("s"+success+" in"+insucess);
         return value;
     }
 
@@ -28,7 +28,7 @@ public class Cache extends HashMap<String, Object> {
                 new java.util.TimerTask() {
                     @Override
                     public void run() {
-                      remove(link);
+                        remove(link);
                     }
                 },
                 10000

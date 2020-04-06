@@ -32,7 +32,7 @@ class AirqualityApplicationTests {
     @BeforeEach
     public void setUpCoordsAndAirQuality() throws Exception {
         airRepository.saveAndFlush(new AirQuality("Aveiro,Portugal", "o3", "77", "Good Air Quality"));
-        coordinateRepository.saveAndFlush(new Coordinates("Porto,Portugal",40.3054,3.36524));
+        coordinateRepository.saveAndFlush(new Coordinates("Porto,Portugal", 40.3054, 3.36524));
 
     }
 
