@@ -34,12 +34,13 @@ public class HourlyTest {
     driver.quit();
   }
   @Test
-  public void success() {
+  public void success() throws InterruptedException {
     driver.findElement(By.id("place")).click();
     driver.findElement(By.id("place")).sendKeys("Aveiro,Portugal");
     driver.findElement(By.id("hours")).click();
     driver.findElement(By.id("hours")).sendKeys("3");
     driver.findElement(By.id("searchButton")).click();
+    Thread.sleep(6000);
     WebDriverWait wait = new WebDriverWait(driver, 30);
     WebElement selectPollutant = wait.until(ExpectedConditions.elementToBeClickable(By.id("pollutant")));
     selectPollutant.click();

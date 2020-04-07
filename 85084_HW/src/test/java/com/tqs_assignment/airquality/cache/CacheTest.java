@@ -68,7 +68,7 @@ class CacheTest {
     @Test
     public void whenGetingAfterTime_thenInsuccessIncrements () throws InterruptedException {
         cache.put("link","hey");
-        Thread.sleep(2000);
+        Thread.sleep(20000);
         for (int i = 0 ; i < 3 ; i++ ) {
             cache.get("link");
         }
