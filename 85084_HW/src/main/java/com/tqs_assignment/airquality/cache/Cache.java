@@ -1,23 +1,14 @@
 package com.tqs_assignment.airquality.cache;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Timer;
 
 public class Cache extends HashMap<String, Object> {
     public static HashMap<String, Object> GlobalCache = new Cache();
-
-
-    @Override
-    public String toString() {
-        return "Cache{" +
-                "success=" + success +
-                ", insucess=" + insucess +
-                '}';
-    }
-
-    private int success;
-    private int insucess;
-    private Timer timer = new Timer();
+    protected int success;
+    protected int insucess;
+    protected transient Timer timer = new Timer();
 
     @Override
     public Object get(Object key) {
@@ -46,6 +37,15 @@ public class Cache extends HashMap<String, Object> {
         return value;
     }
 
+    @Override
+    public String toString() {
+        return "Cache{" +
+                "success=" + success +
+                ", insucess=" + insucess +
+                '}';
+    }
+
+
     public int getSuccess() {
         return success;
     }
@@ -63,4 +63,18 @@ public class Cache extends HashMap<String, Object> {
     }
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Cache cache = (Cache) o;
+        return success == cache.success &&
+                insucess == cache.insucess;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), success, insucess);
+    }
 }

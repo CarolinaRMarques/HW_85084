@@ -10,13 +10,12 @@ import com.tqs_assignment.airquality.services.CoordinateService;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,6 +24,8 @@ import java.util.Optional;
 
 @RestController
 public class HomeController {
+    public static final String NON_EXISTING = "Non Existing";
+    public static final String UNDEFINED = "undefined";
     private HttpClient cliente = new HttpClient();
 
 
@@ -39,14 +40,14 @@ public class HomeController {
         this.airService = airService;
     }
 
-    @RequestMapping(value = { "/airquality/{placename}", "/airquality"})
-    public Object getPlaceQuality(@PathVariable Optional<String> placename) throws IOException, ParseException {
-        AirQuality error = new AirQuality("undefined", "undefined", "undefined", "undefined");;
+    @RequestMapping(value = {"/airquality/{placename}", "/airquality"}, method = RequestMethod.GET)
+    public Object getPlaceQuality(@PathVariable Optional<String> placename) throws Throwable {
+        AirQuality error = new AirQuality(UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED);
         Object object;
         if (placename.isPresent()) {
             Coordinates found = getCoordWithName(placename.get());
             AirQuality currAir;
-            if (found.getPlacename().equals("Non Existing")) {
+            if (found.getPlacename().equals(NON_EXISTING)) {
                 object = error;
             } else {
                 String apiurl = "https://api.breezometer.com/air-quality/v2/current-conditions";
@@ -74,36 +75,33 @@ public class HomeController {
                     displayCacheStatistic();
                 }
             }
-        }
-        else {
-           object = error;
+        } else {
+            object = error;
         }
         return object;
     }
 
-    @RequestMapping(value = "/cache")
-    public Object displayCacheStatistic() {
+    @RequestMapping(value = "/cache", method = RequestMethod.GET)
+    public String displayCacheStatistic() {
         return Cache.GlobalCache.toString();
 
     }
 
-    @RequestMapping(value = {"/airhistory/{placename}/{hours}","/airhistory/{placename}", "/airhistory/{hours}", "/airhistory"})
-    public Object getPlaceHistory(@PathVariable  (required = false) Optional<String> hours, @PathVariable  (required = false) Optional<String> placename) throws IOException, ParseException {
+    @RequestMapping(value = {"/airhistory/{placename}/{hours}", "/airhistory/{placename}", "/airhistory/{hours}", "/airhistory"}, method = RequestMethod.GET)
+    public Object getPlaceHistory(@PathVariable(required = false) Optional<String> hours, @PathVariable(required = false) Optional<String> placename) throws Throwable {
         Object object;
-        if (!placename.isPresent() || !hours.isPresent()){
+        if (!placename.isPresent() || !hours.isPresent()) {
             object = Collections.emptyList();
-        }
-        else {
+        } else {
             Coordinates found = getCoordWithName(placename.get());
             ArrayList<AirQuality> currAir = new ArrayList<>();
 
-            if (found.getPlacename().equals("Non Existing") || !hours.get().matches("[0-9]+")) {
+            if (found.getPlacename().equals(NON_EXISTING) || !hours.get().matches("[0-9]+")) {
                 object = Collections.emptyList();
             } else {
-                if (Integer.parseInt(hours.get()) <= 0 ){
+                if (Integer.parseInt(hours.get()) <= 0) {
                     object = Collections.emptyList();
-                }
-                else {
+                } else {
                     String apiurl = "https://api.breezometer.com/air-quality/v2/historical/hourly";
                     String apiKey = "ae34208e72cb4acbb2e7a611e4d925e9";
                     String linkAPI = apiurl + "?lat=" + found.getLatitude() + "&lon=" + found.getLongitude() + "&key=" + apiKey + "&hours=" + hours.get();
@@ -123,7 +121,7 @@ public class HomeController {
                             String category = (String) baqi.get("category");
                             String aqi = (String) baqi.get("aqi_display");
                             String pollutant = (String) baqi.get("dominant_pollutant");
-                            currAir.add(i, new AirQuality(placename.get() + Integer.toString(i), pollutant, aqi, category));
+                            currAir.add(i, new AirQuality(placename.get() + i, pollutant, aqi, category));
                         }
                         airService.saveHistData(currAir);
                         object = airService.findData();
@@ -136,23 +134,20 @@ public class HomeController {
     }
 
 
-    @RequestMapping(value = {"/coords/{placename}", "/coords"})
-    public Coordinates displayCoords(@PathVariable (required = false) Optional<String> placename) throws IOException, ParseException {
+    @RequestMapping(value = {"/coords/{placename}", "/coords"}, method = RequestMethod.GET)
+    public Coordinates displayCoords(@PathVariable(required = false) Optional<String> placename) throws Throwable {
         Coordinates object;
         if (placename.isPresent()) {
             coordinateService.saveCoordinate(getCoordWithName(placename.get()));
-              return getCoordWithName(placename.get());
-        }
-        else {
-            object = new Coordinates("undefined",0.0,0.0);
+            return getCoordWithName(placename.get());
+        } else {
+            object = new Coordinates(UNDEFINED, 0.0, 0.0);
         }
         return object;
     }
 
 
-
-
-    public Coordinates getCoordWithName(String placename) throws IOException, ParseException {
+    private Coordinates getCoordWithName(String placename) throws Throwable {
         Coordinates found;
         Double latitude = null;
         Double longitude = null;
@@ -163,12 +158,11 @@ public class HomeController {
         JSONParser parse = new JSONParser();
         JSONObject jsonObject = (JSONObject) parse.parse(inline);
         JSONArray jsonArrayResults = (JSONArray) jsonObject.get("results");
-        if (jsonArrayResults.size() == 0) {
+        if (jsonArrayResults.isEmpty()) {
             latitude = 0.0;
             longitude = 0.0;
-            placename = "Non Existing";
-        }
-        else {
+            placename = NON_EXISTING;
+        } else {
             for (int i = 0; i < jsonArrayResults.size(); i++) {
                 JSONObject jsonObject1 = (JSONObject) jsonArrayResults.get(i);
                 JSONObject jsonArrayGeometry = (JSONObject) jsonObject1.get("geometry");

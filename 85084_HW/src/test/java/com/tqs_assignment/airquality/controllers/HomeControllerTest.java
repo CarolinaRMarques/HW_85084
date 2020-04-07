@@ -54,16 +54,16 @@ class HomeControllerTest {
 
     @Test
     void whenGetHourlyQuality_thenGetPlaceHistory() throws Exception {
-        AirQuality a =   new AirQuality("Aveiro,Portugal", "o3", "75", "Good air quality") ;
-        AirQuality b =   new AirQuality("Porto,Portugal", "o3", "75", "Good air quality") ;
-        List<AirQuality> allHist = Arrays.asList(a,b);
+        AirQuality a = new AirQuality("Aveiro,Portugal", "o3", "75", "Good air quality");
+        AirQuality b = new AirQuality("Porto,Portugal", "o3", "75", "Good air quality");
+        List<AirQuality> allHist = Arrays.asList(a, b);
         given(airService.findData()).willReturn(allHist);
 
         servlet.perform(MockMvcRequestBuilders.get("/airhistory/Aveiro,Portugal/3"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$",hasSize(2)))
-                .andExpect(jsonPath("$[0].place",is(a.getPlace())))
-                .andExpect(jsonPath("$[1].place",is(b.getPlace())));
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].place", is(a.getPlace())))
+                .andExpect(jsonPath("$[1].place", is(b.getPlace())));
 
         verify(airService, VerificationModeFactory.times(1)).saveHistData(Mockito.any());
         reset(airService);
@@ -95,7 +95,7 @@ class HomeControllerTest {
     @Test
     public void whenGetInexistingPlaceCoords_theReturnUndefinedCoordinates() throws Exception {
         String not_valid_city = "not_valid_city";
-        given(coordService.getPlaceByCoordinate((not_valid_city))).willReturn(new Coordinates("Non Existing",0.0,0.0));
+        given(coordService.getPlaceByCoordinate((not_valid_city))).willReturn(new Coordinates("Non Existing", 0.0, 0.0));
         servlet.perform(MockMvcRequestBuilders.get("/coords/".concat(not_valid_city)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("placename").value("Non Existing"));
@@ -103,7 +103,7 @@ class HomeControllerTest {
 
     @Test
     public void whenNoPlaceSelected_theReturnUndefinedCoordinates() throws Exception {
-        given(coordService.getPlaceByCoordinate(("undefined"))).willReturn(new Coordinates("undefined",0.0,0.0));
+        given(coordService.getPlaceByCoordinate(("undefined"))).willReturn(new Coordinates("undefined", 0.0, 0.0));
         servlet.perform(MockMvcRequestBuilders.get("/coords"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("placename").value("undefined"));
@@ -114,7 +114,7 @@ class HomeControllerTest {
         String not_valid_city = "not_valid_city";
         List<AirQuality> allHist = null;
         given(airService.findData()).willReturn(allHist);
-        servlet.perform(MockMvcRequestBuilders.get("/airhistory/".concat(not_valid_city)+"/3"))
+        servlet.perform(MockMvcRequestBuilders.get("/airhistory/".concat(not_valid_city) + "/3"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isEmpty());
     }

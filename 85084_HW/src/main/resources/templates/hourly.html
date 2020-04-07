@@ -58,9 +58,11 @@
             .then((res) => res.json())
             .then((data) => {
                 let output = '<h2 align="center">Hours</h2>';
-                if (hours == "" || placeName == "") { output += ` <h3 id="missing">Didn't input City Name or Hours!</h3> ` ;}
-                else if (data.length == 0) { output  += ` <h3 id="incorrect">Number of hours or City Name Invalid!</h3> ` }
-                else {
+                if (hours == "" || placeName == "") {
+                    output += ` <h3 id="missing">Didn't input City Name or Hours!</h3> `;
+                } else if (data.length == 0) {
+                    output += ` <h3 id="incorrect">Number of hours or City Name Invalid!</h3> `
+                } else {
                     data.forEach(function (hour) {
                         output += `
                         <ul class="list-group" id="test">

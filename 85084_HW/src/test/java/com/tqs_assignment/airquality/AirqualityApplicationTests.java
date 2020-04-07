@@ -75,7 +75,7 @@ class AirqualityApplicationTests {
     }
 
     private void createTestAirQuality(String placename) {
-        AirQuality a =   new AirQuality(placename, "o3", "75", "Good air quality") ;
+        AirQuality a = new AirQuality(placename, "o3", "75", "Good air quality");
         airRepository.saveAndFlush(a);
     }
 }

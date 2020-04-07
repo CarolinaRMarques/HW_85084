@@ -1,20 +1,19 @@
 package com.tqs_assignment.airquality.connection;
 
-import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
 
 public class HttpClient {
 
-    public String get(URL url) throws IOException {
+    public String get(URL url) throws Throwable {
         String inline = "";
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.connect();
         int responsecode = conn.getResponseCode();
         if (responsecode != 200) {
-            throw new RuntimeException("HttpResponseCode: " + responsecode);
+            error(responsecode);
         } else {
             Scanner sc = new Scanner(url.openStream());
             while (sc.hasNext()) {
@@ -25,4 +24,7 @@ public class HttpClient {
         return inline;
     }
 
+    public void error(int bar) throws Throwable {  // Noncompliant
+        throw new RuntimeException("HttpResponseCode: " + bar);     // Noncompliant
+    }
 }

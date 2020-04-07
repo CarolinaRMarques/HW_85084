@@ -35,7 +35,7 @@ class AirRepositoryTest {
         AirQuality b = new AirQuality("Porto,Portugal", "o3", "77", "Good Air Quality");
         List<AirQuality> allAirQuality = Arrays.asList(a, b);
 
-        for (int i = 0 ;i < allAirQuality.size(); i++) {
+        for (int i = 0; i < allAirQuality.size(); i++) {
             entityManager.persistAndFlush(allAirQuality.get(i));
         }
 
@@ -50,6 +50,7 @@ class AirRepositoryTest {
         List<AirQuality> fromDb = repo.findAll();
         assertThat(fromDb).isEmpty();
     }
+
     @Test
     public void whenInvalidName_thenReturnNull() {
         AirQuality fromDb = repo.findByPlace("doesNotExist");
