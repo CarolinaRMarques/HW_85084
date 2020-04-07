@@ -58,14 +58,15 @@
             .then((res) => res.json())
             .then((data) => {
                 let output = '<h2 align="center">Hours</h2>';
-                if (hours == "") { output += "";}
+                if (hours == "" || placeName == "") { output += ` <h3 id="missing">Didn't input City Name or Hours!</h3> ` ;}
+                else if (data.length == 0) { output  += ` <h3 id="incorrect">Number of hours or City Name Invalid!</h3> ` }
                 else {
                     data.forEach(function (hour) {
                         output += `
-                        <ul class="list-group">
-                          <li class="list-group-item">Pollutant: ${hour.domminant_pollutant} </li>
-                          <li class="list-group-item">AirQuality: ${hour.aqi}</li>
-                          <li class="list-group-item">Description: ${hour.category}</li>
+                        <ul class="list-group" id="test">
+                          <li class="list-group-item" id="pollutant">Pollutant: ${hour.domminant_pollutant} </li>
+                          <li class="list-group-item" id="aqi">AirQuality: ${hour.aqi}</li>
+                          <li class="list-group-item" id="category">Description: ${hour.category}</li>
                         </ul>
                          `;
                     })
