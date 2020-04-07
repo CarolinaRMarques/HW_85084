@@ -46,14 +46,12 @@ public class HomeController {
         if (placename.isPresent()) {
             Coordinates found = getCoordWithName(placename.get());
             AirQuality currAir;
-
             if (found.getPlacename().equals("Non Existing")) {
                 object = error;
             } else {
                 String apiurl = "https://api.breezometer.com/air-quality/v2/current-conditions";
                 String apiKey = "ae34208e72cb4acbb2e7a611e4d925e9";
                 String linkAPI = apiurl + "?lat=" + found.getLatitude() + "&lon=" + found.getLongitude() + "&key=" + apiKey;
-
                 object = Cache.GlobalCache.get(linkAPI);
                 if (object == null) {
                     URL url = new URL(linkAPI);
@@ -73,6 +71,7 @@ public class HomeController {
                     airService.saveAirData(currAir);
                     object = airService.getDataByPlaceName(placename.get());
                     Cache.GlobalCache.put(linkAPI, object);
+                    displayCacheStatistic();
                 }
             }
         }
@@ -80,6 +79,12 @@ public class HomeController {
            object = error;
         }
         return object;
+    }
+
+    @RequestMapping(value = "/cache")
+    public Object displayCacheStatistic() {
+        return Cache.GlobalCache.toString();
+
     }
 
     @RequestMapping(value = {"/airhistory/{placename}/{hours}","/airhistory/{placename}", "/airhistory/{hours}", "/airhistory"})
@@ -143,6 +148,8 @@ public class HomeController {
         }
         return object;
     }
+
+
 
 
     public Coordinates getCoordWithName(String placename) throws IOException, ParseException {

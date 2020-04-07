@@ -6,6 +6,15 @@ import java.util.Timer;
 public class Cache extends HashMap<String, Object> {
     public static HashMap<String, Object> GlobalCache = new Cache();
 
+
+    @Override
+    public String toString() {
+        return "Cache{" +
+                "success=" + success +
+                ", insucess=" + insucess +
+                '}';
+    }
+
     private int success;
     private int insucess;
     private Timer timer = new Timer();
@@ -20,6 +29,7 @@ public class Cache extends HashMap<String, Object> {
         }
         return value;
     }
+
 
     @Override
     public Object put(String link, Object key) {
