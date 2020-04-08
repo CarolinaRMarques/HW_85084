@@ -105,7 +105,6 @@ public class HomeController {
                     String apiurl = "https://api.breezometer.com/air-quality/v2/historical/hourly";
                     String apiKey = "ae34208e72cb4acbb2e7a611e4d925e9";
                     String linkAPI = apiurl + "?lat=" + found.getLatitude() + "&lon=" + found.getLongitude() + "&key=" + apiKey + "&hours=" + hours.get();
-
                     object = Cache.GlobalCache.get(linkAPI);
                     if (object == null) {
                         URL url = new URL(linkAPI);
