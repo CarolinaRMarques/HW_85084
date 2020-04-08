@@ -1,0 +1,106 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: CoordinateService</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.tqs_assignment.airquality.services</a> ]
+</div>
+
+<h1>Coverage Summary for Class: CoordinateService (com.tqs_assignment.airquality.services)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CoordinateService</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    33.3%
+  </span>
+  <span class="absValue">
+    (1/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (3/ 6)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.tqs_assignment.airquality.services;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import com.tqs_assignment.airquality.entities.Coordinates;
+<i>4</i>&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+<i>5</i>&nbsp;import org.springframework.stereotype.Service;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;@Service
+<i>8</i>&nbsp;public class CoordinateService {
+<i>9</i>&nbsp;    @Autowired
+<i>10</i>&nbsp;    CoordinateRepository coordinateRepository;
+<i>11</i>&nbsp;
+<b class="fc"><i>12</i>&nbsp;    public CoordinateService(CoordinateRepository coordinateRepository) {</b>
+<b class="fc"><i>13</i>&nbsp;        this.coordinateRepository = coordinateRepository;</b>
+<b class="fc"><i>14</i>&nbsp;    }</b>
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;    public Coordinates getPlaceByCoordinate(String placename) {
+<b class="nc"><i>17</i>&nbsp;        return coordinateRepository.findByPlacename(placename);</b>
+<i>18</i>&nbsp;    }
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;    public void saveCoordinate(Coordinates coordinate) {
+<b class="nc"><i>21</i>&nbsp;        coordinateRepository.save(coordinate);</b>
+<b class="nc"><i>22</i>&nbsp;    }</b>
+<i>23</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-04-08 00:38</div>
+</div>
+</body>
+</html>

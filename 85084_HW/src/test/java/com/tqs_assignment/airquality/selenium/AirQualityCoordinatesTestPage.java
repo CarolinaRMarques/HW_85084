@@ -59,8 +59,6 @@ public class AirQualityCoordinatesTestPage {
         assertThat(driver.findElement(By.id("dominant")).getText(), containsString("undefined"));
         assertThat(driver.findElement(By.id("aqi")).getText(), containsString("undefined"));
         assertThat(driver.findElement(By.id("category")).getText(), containsString("undefined"));
-        //  driver.findElement(By.id("latitude")).click();
-        // assertThat(driver.findElement(By.id("latitude")).getText(), containsString("0"));
     }
 
     @Test

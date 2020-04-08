@@ -53,7 +53,7 @@ class AirServiceTest {
     }
 
     @Test
-    public void given2AirQualities_whengetAll_thenReturn3Records() {
+    public void given2AirQualities_whengetAll_thenReturn2Records() {
         AirQuality a = new AirQuality("Aveiro,Portugal", "o3", "77", "Good Air Quality");
         AirQuality b = new AirQuality("Porto,Portugal", "o3", "77", "Good Air Quality");
         List<AirQuality> allAirQuality = airService.findData();

@@ -81,7 +81,6 @@ class HomeControllerTest {
 
     }
 
-
     @Test
     public void whenGetInexistingPlace_theReturnUndefinedAirQuality() throws Exception {
         String not_valid_city = "not_valid_city";

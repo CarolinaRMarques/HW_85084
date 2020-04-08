@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="108.125" y="0.0">com.tqs_assignment.airquality.entities.AirQuality</node>
+    <node x="454.72787081339703" y="676.0">com.tqs_assignment.airquality.controllers.HomeController</node>
+    <node x="0.0" y="248.0">com.tqs_assignment.airquality.services.AirRepository</node>
+    <node x="0.0" y="1015.0">com.tqs_assignment.airquality.controllers.HtmlController</node>
+    <node x="368.625" y="248.0">com.tqs_assignment.airquality.services.CoordinateRepository</node>
+    <node x="415.93600478468903" y="410.0">com.tqs_assignment.airquality.services.CoordinateService</node>
+    <node x="969.936004784689" y="350.0">com.tqs_assignment.airquality.cache.Cache</node>
+    <node x="6.625" y="386.0">com.tqs_assignment.airquality.services.AirService</node>
+    <node x="797.936004784689" y="435.0">com.tqs_assignment.airquality.connection.HttpClient</node>
+    <node x="545.1074561403509" y="12.0">com.tqs_assignment.airquality.entities.Coordinates</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.tqs_assignment.airquality.controllers.HomeController" target="com.tqs_assignment.airquality.connection.HttpClient">
+      <point x="125.45454545454561" y="-147.0" />
+      <point x="810.1824162679427" y="656.0" />
+      <point x="835.936004784689" y="656.0" />
+      <point x="-38.0" y="38.0" />
+    </edge>
+    <edge source="com.tqs_assignment.airquality.controllers.HomeController" target="com.tqs_assignment.airquality.entities.Coordinates">
+      <point x="83.63636363636374" y="-147.0" />
+      <point x="768.3642344497607" y="656.0" />
+      <point x="787.436004784689" y="656.0" />
+      <point x="787.436004784689" y="223.0" />
+      <point x="804.1074561403509" y="223.0" />
+      <point x="111.0" y="87.0" />
+    </edge>
+    <edge source="com.tqs_assignment.airquality.services.CoordinateRepository" target="com.tqs_assignment.airquality.entities.Coordinates">
+      <point x="0.0" y="-26.0" />
+      <point x="521.125" y="223.0" />
+      <point x="582.1074561403509" y="223.0" />
+      <point x="-111.0" y="87.0" />
+    </edge>
+    <edge source="com.tqs_assignment.airquality.services.CoordinateService" target="com.tqs_assignment.airquality.services.CoordinateRepository">
+      <point x="0.0" y="-63.0" />
+      <point x="590.936004784689" y="325.0" />
+      <point x="597.375" y="325.0" />
+      <point x="76.25" y="26.0" />
+    </edge>
+    <edge source="com.tqs_assignment.airquality.controllers.HomeController" target="com.tqs_assignment.airquality.cache.Cache">
+      <point x="209.09090909090912" y="-147.0" />
+      <point x="893.8187799043062" y="656.0" />
+      <point x="1125.436004784689" y="656.0" />
+      <point x="0.0" y="123.0" />
+    </edge>
+    <edge source="com.tqs_assignment.airquality.controllers.HomeController" target="com.tqs_assignment.airquality.services.AirService">
+      <point x="-167.27272727272714" y="-147.0" />
+      <point x="517.45514354067" y="646.0" />
+      <point x="254.125" y="646.0" />
+      <point x="82.5" y="87.0" />
+    </edge>
+    <edge source="com.tqs_assignment.airquality.services.CoordinateService" target="com.tqs_assignment.airquality.entities.Coordinates">
+      <point x="116.66666666666663" y="-63.0" />
+      <point x="707.6026714513557" y="325.0" />
+      <point x="701.9118819776716" y="325.0" />
+      <point x="701.9118819776716" y="223.0" />
+      <point x="656.1074561403509" y="223.0" />
+      <point x="-37.0" y="87.0" />
+    </edge>
+    <edge source="com.tqs_assignment.airquality.controllers.HomeController" target="com.tqs_assignment.airquality.entities.AirQuality">
+      <point x="-125.45454545454538" y="-147.0" />
+      <point x="559.2733253588517" y="636.0" />
+      <point x="347.125" y="636.0" />
+      <point x="347.125" y="223.0" />
+      <point x="307.5" y="223.0" />
+      <point x="39.875" y="99.0" />
+    </edge>
+    <edge source="com.tqs_assignment.airquality.services.AirRepository" target="com.tqs_assignment.airquality.entities.AirQuality">
+      <point x="0.0" y="-26.0" />
+      <point x="126.5" y="223.0" />
+      <point x="148.0" y="223.0" />
+      <point x="-119.625" y="99.0" />
+    </edge>
+    <edge source="com.tqs_assignment.airquality.services.AirService" target="com.tqs_assignment.airquality.entities.AirQuality">
+      <point x="110.0" y="-87.0" />
+      <point x="281.625" y="325.0" />
+      <point x="283.3748006379585" y="325.0" />
+      <point x="283.3748006379585" y="223.0" />
+      <point x="227.75" y="223.0" />
+      <point x="-39.875" y="99.0" />
+    </edge>
+    <edge source="com.tqs_assignment.airquality.services.AirService" target="com.tqs_assignment.airquality.services.AirRepository">
+      <point x="-110.0" y="-87.0" />
+      <point x="61.625" y="325.0" />
+      <point x="63.25" y="325.0" />
+      <point x="-63.25" y="26.0" />
+    </edge>
+    <edge source="com.tqs_assignment.airquality.controllers.HomeController" target="com.tqs_assignment.airquality.services.CoordinateService">
+      <point x="1.1368683772161603E-13" y="-147.0" />
+      <point x="684.7278708133972" y="656.0" />
+      <point x="678.436004784689" y="656.0" />
+      <point x="87.5" y="63.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.7000000000000001" x="510.0" y="410.4285714285714" />
+  <SelectedNodes>
+    <node>com.tqs_assignment.airquality.controllers.HtmlController</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+    <Category>Fields</Category>
+    <Category>Constructors</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

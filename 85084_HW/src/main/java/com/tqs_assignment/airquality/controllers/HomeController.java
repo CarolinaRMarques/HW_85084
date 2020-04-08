@@ -117,11 +117,14 @@ public class HomeController {
                         for (int i = 0; i < jsonObject1.size(); i++) {
                             JSONObject hey = (JSONObject) jsonObject1.get(i);
                             JSONObject indexes = (JSONObject) hey.get("indexes");
-                            JSONObject baqi = (JSONObject) indexes.get("baqi");
-                            String category = (String) baqi.get("category");
-                            String aqi = (String) baqi.get("aqi_display");
-                            String pollutant = (String) baqi.get("dominant_pollutant");
-                            currAir.add(i, new AirQuality(placename.get() + i, pollutant, aqi, category));
+                            if(indexes == null) { currAir.add(i,new AirQuality(UNDEFINED,UNDEFINED,UNDEFINED,UNDEFINED));}
+                            else {
+                                JSONObject baqi = (JSONObject) indexes.get("baqi");
+                                String category = (String) baqi.get("category");
+                                String aqi = (String) baqi.get("aqi_display");
+                                String pollutant = (String) baqi.get("dominant_pollutant");
+                                currAir.add(i, new AirQuality(placename.get() + i, pollutant, aqi, category));
+                            }
                         }
                         airService.saveHistData(currAir);
                         object = airService.findData();

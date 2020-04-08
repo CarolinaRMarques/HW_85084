@@ -8,6 +8,7 @@ public class Cache extends HashMap<String, Object> {
     public static HashMap<String, Object> GlobalCache = new Cache();
     protected int success;
     protected int insucess;
+    protected int total_requests ;
     protected transient Timer timer = new Timer();
 
     @Override
@@ -18,6 +19,7 @@ public class Cache extends HashMap<String, Object> {
         } else {
             success++;
         }
+        total_requests = success + insucess ;
         return value;
     }
 
@@ -42,6 +44,7 @@ public class Cache extends HashMap<String, Object> {
         return "Cache{" +
                 "success=" + success +
                 ", insucess=" + insucess +
+                ", total_requests= " + total_requests +
                 '}';
     }
 
@@ -62,6 +65,13 @@ public class Cache extends HashMap<String, Object> {
         this.insucess = insucess;
     }
 
+    public int getTotal_requests() {
+        return total_requests;
+    }
+
+    public void setTotal_requests(int total_requests) {
+        this.total_requests = total_requests;
+    }
 
     @Override
     public boolean equals(Object o) {
