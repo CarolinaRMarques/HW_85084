@@ -47,10 +47,9 @@ public class HourlyTest {
         WebElement selectPollutant = wait.until(ExpectedConditions.elementToBeClickable(By.id("pollutant")));
         selectPollutant.click();
         assertThat(driver.findElement(By.id("pollutant")).getText(), containsString("Pollutant:"));
-        driver.findElement(By.xpath("(//li[@id=\'pollutant\'])[2]")).click();
-        assertThat(driver.findElement(By.xpath("(//li[@id=\'pollutant\'])[2]")).getText(), containsString("Pollutant:"));
-        driver.findElement(By.xpath("(//li[@id=\'pollutant\'])[3]")).click();
+       /* assertThat(driver.findElement(By.xpath("(//li[@id=\'pollutant\'])[2]")).getText(), containsString("Pollutant:"));
         assertThat(driver.findElement(By.xpath("(//li[@id=\'pollutant\'])[3]")).getText(), containsString("Pollutant:"));
+        */
     }
 
     @Test
