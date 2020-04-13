@@ -53,7 +53,6 @@ public class HomeController {
                 String apiurl = "https://api.breezometer.com/air-quality/v2/current-conditions";
                 String apiKey = "f2501b3269634637ab01fed22aa4f22a";
                 String linkAPI = apiurl + "?lat=" + found.getLatitude() + "&lon=" + found.getLongitude() + "&key=" + apiKey;
-                System.out.println(linkAPI);
                 object = Cache.GlobalCache.get(linkAPI);
                 if (object == null) {
                     URL url = new URL(linkAPI);
