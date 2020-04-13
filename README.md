@@ -9,6 +9,7 @@ Details of the air quality :
   The dominant pollutant in that city;
   The overall air quality value;
   Description of the Air Quality;
+  
 **2.**
 History of Air Quality in a city (Ex: Know 3 hours worth of values of the overall quality for Aveiro, Portugal).
 
