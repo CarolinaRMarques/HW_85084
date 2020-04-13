@@ -51,8 +51,9 @@ public class HomeController {
                 object = error;
             } else {
                 String apiurl = "https://api.breezometer.com/air-quality/v2/current-conditions";
-                String apiKey = "ae34208e72cb4acbb2e7a611e4d925e9";
+                String apiKey = "f2501b3269634637ab01fed22aa4f22a";
                 String linkAPI = apiurl + "?lat=" + found.getLatitude() + "&lon=" + found.getLongitude() + "&key=" + apiKey;
+                System.out.println(linkAPI);
                 object = Cache.GlobalCache.get(linkAPI);
                 if (object == null) {
                     URL url = new URL(linkAPI);
@@ -103,7 +104,7 @@ public class HomeController {
                     object = Collections.emptyList();
                 } else {
                     String apiurl = "https://api.breezometer.com/air-quality/v2/historical/hourly";
-                    String apiKey = "ae34208e72cb4acbb2e7a611e4d925e9";
+                    String apiKey = "f2501b3269634637ab01fed22aa4f22a";
                     String linkAPI = apiurl + "?lat=" + found.getLatitude() + "&lon=" + found.getLongitude() + "&key=" + apiKey + "&hours=" + hours.get();
                     object = Cache.GlobalCache.get(linkAPI);
                     if (object == null) {
